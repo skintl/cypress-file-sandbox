@@ -1,0 +1,22 @@
+{
+  "name": "cypress-file-sandbox",
+  "version": "1.0.0",
+  "description": "Simple input and download link allowing to export/import some data and show how long it is in comparison",
+  "keywords": [],
+  "dependencies": {},
+  "devDependencies": {
+    "cypress": "^7.0.1",
+    "http-server": "^0.12.3",
+    "start-server-and-test": "^1.12.1"
+  },
+  "scripts": {
+    "start": "http-server --port 3000",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test": "yarn clear-cypress-downloads && yarn make-secret && start-server-and-test start http://localhost:3000 cy:run",
+    "o:test": "yarn clear-cypress-downloads && yarn make-secret && start-server-and-test start http://localhost:3000 cy:open",
+    "clear-cypress-downloads": "rm -rf cypress/downloads/*",
+    "make-secret": "echo 'dj' > public/secret",
+    "build": "yarn clear-cypress-downloads && yarn make-secret && yarn test"
+  }
+}

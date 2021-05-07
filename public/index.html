@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <style>
+      html, body {
+        height: 100%;
+      }
+      body {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .big {
+        font-size: 32px;
+        border: solid 2px maroon;
+        padding: 16px 32px;
+        cursor: pointer;
+        border-radius: 32px;
+      }
+      input[type="file"] {
+        margin-top: 32px;
+      }
+      .result {
+        margin-top: 32px;
+        line-height: 2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="big" data-testid="download-secret" onclick="downloadFile()">Download</div>
+    <input data-testid="upload-secret" type="file" id="uploadInput"/>
+    <div class="result">
+      <span>Uploaded file length: </span><div data-testid="uploaded-length" id="uploaded"></div>
+      <span>Downloaded file length: </span><div data-testid="existing-length" id="fetched"></div>
+    </div>
+    <script>
+      function downloadFile() {
+        setTimeout(() => window.open('secret'), 3000)
+      }
+      function fetchLog() {
+        return fetch(new Request('/secret'))
+          .then(response => response.text())
+      }
+      function updateSize() {
+        this.files[0].text()
+          .then((text) => {
+            console.log('uploaded ', text);
+            document.getElementById("uploaded").innerHTML = '' + text.length;
+          })
+        fetchLog()
+          .then((text) => {
+            console.log('fetched ', text);
+            document.getElementById("fetched").innerHTML = '' + text.length;
+          });
+      }
+
+      document.getElementById("uploadInput").addEventListener("change", updateSize, false);
+    </script>
+  </body>
+</html>
